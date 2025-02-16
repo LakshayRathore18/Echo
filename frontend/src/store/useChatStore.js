@@ -62,10 +62,10 @@ export const useChatStore = create((set, get) => ({
     socket.on("newMessage", (newMessage) => {
 
       // if the message is not for the selected user, return
-      if(newMessage.sender._id != selectedUser._id) return;
+      if(newMessage.senderId != selectedUser._id) return;
 
       // add the message to the messages array
-      set({ messages: [...get().messages, message] });
+      set({ messages: [...get().messages, newMessage] });
     });
   },
 
