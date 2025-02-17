@@ -1,5 +1,7 @@
 # Echo - RealTime Chat Application
 
+![Demo App](/frontend/public/ss_for_readme.png)
+
 A full-stack real-time chat application built with MERN stack (MongoDB, Express.js, React.js, Node.js), Tailwind CSS and Socket.io.
 
 ## Features
