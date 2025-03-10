@@ -4,6 +4,8 @@
 
 A full-stack real-time chat application built with MERN stack (MongoDB, Express.js, React.js, Node.js), Tailwind CSS and Socket.io.
 
+You can check out the live version of the application at [Echo](https://echo-60c5.onrender.com/).
+
 ## Features
 
 - 🔐 User authentication (Signup, Login, Logout)
