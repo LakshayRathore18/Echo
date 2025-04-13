@@ -1,172 +1,69 @@
-import { useState } from "react";
+import { motion } from "framer-motion";
 import { useAuthStore } from "../store/useAuthStore";
-import { MessageSquare, User, Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
-import { Link } from "react-router-dom";
-import AuthImagePattern from "../components/AuthImagePattern";
-import toast from "react-hot-toast";
+import AnimatedBackground from "../components/auth/AnimatedBackground";
+import SignupForm from "../components/auth/SignupForm";
+import { pageVariants } from "../components/auth/AnimationVariants"; // Adjust path if needed
 
 const SignupPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
-
   const { signup, isSigningUp } = useAuthStore();
 
-  const validateForm = () => {
-    if(!formData.name.trim()) return toast.error("Name is required");
-    
-    if(!formData.email.trim()) return toast.error("Email is required");
-    if(!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(formData.email)) return toast.error("Invalid email address");
-
-    if(!formData.password.trim()) return toast.error("Password is required");
-    if(formData.password.length < 6) return toast.error("Password must be at least 6 characters long");
-
-    return true;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const sucess = validateForm();
-    if(sucess===true) signup(formData);
-    
-  };
-
   return (
-    <>
-      <br />
-      <div className="min-h-screen grid lg:grid-cols-2">
-      {/* left side */}
-      <div className="flex flex-col justify-center items-center p-6 sm:p-12">
-        <div className="w-full max-w-md space-y-8">
-          {/* LOGO */}
-          <div className="text-center mb-8">
-            <div className="flex flex-col items-center gap-2 group">
-              <div
-                className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
-              group-hover:bg-primary/20 transition-colors"
-              >
-                <MessageSquare className="size-6 text-primary" />
-              </div>
-              <h1 className="text-2xl font-bold mt-2">Create Account</h1>
-              <p className="text-base-content/60">
-                Get started with your free account
-              </p>
-            </div>
-          </div>
-
-          {/* FORM */}
-          <form onSubmit={handleSubmit} className="space-y-6">
-
-            {/* Name */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Full Name</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="text"
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="John Doe"
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Email</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type="email"
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Password */}
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Password</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="size-5 text-base-content/40" />
-                </div>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  className={`input input-bordered w-full pl-10`}
-                  placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                />
-                <button
-                  type="button"
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeOff className="size-5 text-base-content/40" />
-                  ) : (
-                    <Eye className="size-5 text-base-content/40" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Submit */}
-            <button className="btn btn-primary w-full" type="submit" disabled={isSigningUp}>
-                  {isSigningUp? (
-                    <>
-                    <Loader2 className="size-5 mr-2 animate-spin" />
-                      Loading...
-                    </>
-                  ): (
-                    "Create Account"
-                  )}
-            </button>
-          </form>
-
-          {/* Already have an account?  */}
-          <div className="text-center">
-            <p className="text-base-content/60">
-              Already have an account?{" "}
-              <Link to="/login" className="link link-primary">
-                Sign in
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* right side */}
-      <AuthImagePattern
-        title="Join our community"
-        subtitle="Connect with friends, share moments, and stay in touch with your loved ones."
+    <motion.div
+      key="signupPage"
+      variants={pageVariants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      className="min-h-screen flex items-center justify-center p-4 overflow-hidden relative bg-base-200 dark:bg-base-900"
+      style={{
+        "--gradient-angle": "45deg",
+        "--gradient-colors": "hsl(var(--p)/0.3), hsl(var(--s)/0.3), hsl(var(--a)/0.3)"
+      }}
+    >
+      {/* Glitch border overlay */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none z-[-1]"
+        style={{
+          background: `linear-gradient(var(--gradient-angle), transparent 48%, var(--gradient-colors) 50%, transparent 52%)`,
+          backgroundSize: "200% 200%",
+          filter: "url(#glitch)"
+        }}
+        animate={{
+          backgroundPosition: ["0% 0%", "100% 100%"],
+          rotate: 360
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
       />
-    </div>
-    </>
-    
+      
+      {/* SVG filter for glitch effect */}
+      <svg className="hidden">
+        <filter id="glitch">
+          <feTurbulence 
+            type="fractalNoise" 
+            baseFrequency="0.02" 
+            numOctaves="3" 
+            result="noise"
+          />
+          <feDisplacementMap 
+            in="SourceGraphic" 
+            in2="noise" 
+            scale="2" 
+            xChannelSelector="R" 
+            yChannelSelector="B"
+          />
+        </filter>
+      </svg>
+
+      <AnimatedBackground />
+      <SignupForm
+        onSignupSubmit={signup}
+        isSigningUp={isSigningUp}
+      />
+    </motion.div>
   );
 };
 
