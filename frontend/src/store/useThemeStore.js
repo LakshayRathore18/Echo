@@ -1,8 +1,8 @@
 import { create } from "zustand";
 
 export const useThemeStore = create((set) => ({
-  // Get the theme from local storage or set it to 'Synthwave'
-  theme: localStorage.getItem("chat-theme") || "Synthwave",
+  // Get the theme from local storage or set it to 'synthwave'
+  theme: localStorage.getItem("chat-theme") || "winter",
 
   // Set the theme in local storage and update the state
   setTheme: (theme) => {
